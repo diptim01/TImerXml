@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "CounterView";
+}
+
+<h2>Countdown</h2>
+
+<h1 id="time">0:00</h1>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <style type="text/css">
+        h1 {
+            font-size: 5em;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var secondRemaining;
+            var intervalHandle;
+            function changeColor() {
+                $("#time").css('color', 'red'); 
+            }
+            function tick() {
+                var timeDisplay = $("#time");
+                var min = Math.floor(secondRemaining / 60);
+                var sec = secondRemaining - (min * 60);
+                
+                if (sec < 10) {
+                    sec = "0" + sec;
+                   
+                }
+
+                if (min === 0 && sec < 10) {
+                    changeColor();
+                }
+                var message = min + ":" + sec;
+                timeDisplay.html(message);
+
+                if (secondRemaining === 0) {
+                    alert("done! Task Completed.");
+                    clearInterval(intervalHandle);
+                    timeDisplay.html("Time's up!");
+                }
+                secondRemaining--;
+            };
+
+            function startCountDown() {
+                var parsed = @Html.Raw(Json.Encode(ViewBag.timer));
+                var timer = parseInt(parsed);
+                secondRemaining = timer * 60;
+                intervalHandle = setInterval(tick, 1000);
+            };
+
+
+            function resetPage() {
+
+            };
+
+         
+            startCountDown();
+        });
+    </script>
+}
+

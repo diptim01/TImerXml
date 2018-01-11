@@ -1,0 +1,29 @@
+﻿@model IEnumerable<TImerXml.Models.TimerTask>
+@{
+    ViewBag.Title = "ViewAllTasks";
+}
+
+<h2>My Tasks</h2>
+<br/>
+
+<table class="table">
+    <tr>
+        <td>Name of Task</td>
+        <td>Description</td>
+        <td>Timer</td>
+    </tr>
+
+    @foreach (var x in Model)
+    {
+
+        <tr>
+            <td>@x.NameOfTask</td>
+            <td>@x.Description</td>
+            <td>@x.Timer</td>
+        </tr>
+    }
+</table>
+@if (!Model.Any())
+{
+    <div class="text-center"><h2 style="color:cadetblue"> No Record was found</h2> </div>
+}
